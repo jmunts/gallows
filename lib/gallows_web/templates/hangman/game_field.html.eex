@@ -1,15 +1,10 @@
 <%= game_status(@tally.game_state) %>
 
-<p>Turns left: <%= @tally.turns_left %></p>
-<p>Words so far: <%= concat_letters(@tally.letters) %></p>
-
-<p>Letters used: <%= concat_letters(@tally.used) %></p>
-
-<%= if game_over?(@tally.game_state) do %>
-  <%= button("New Game", to: hangman_path(@conn, :create_game)) %>
-<% else %>
-  <%= form_for(@conn, hangman_path(@conn, :make_move), [ as: :make_move, method: :put ], fn f -> %>
-    <%= text_input(f, :guess, autofocus: true) %>
-    <%= submit("Make move") %>
-  <% end) %>
-<% end %>
+<div class="row">
+  <div class="col-md-4">
+    <%= render("_gallows.html", left: @tally.turns_left) %>
+  </div>
+  <div class="col-md-7 offset-md-1">
+    <%= render("_game_state.html", conn: @conn, tally: @tally) %>
+  </div>
+</div>

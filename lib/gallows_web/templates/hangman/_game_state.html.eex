@@ -1,0 +1,13 @@
+<p>Turns left: <%= @tally.turns_left %></p>
+<p>Words so far: <%= concat_letters(@tally.letters) %></p>
+
+<p>Letters used: <%= concat_letters(@tally.used) %></p>
+
+<%= if game_over?(@tally.game_state) do %>
+  <%= button("New Game", to: hangman_path(@conn, :create_game)) %>
+<% else %>
+  <%= form_for(@conn, hangman_path(@conn, :make_move), [ as: :make_move, method: :put ], fn f -> %>
+  <%= text_input(f, :guess, autofocus: true) %>
+  <%= submit("Make move") %>
+<% end) %>
+<% end %>
